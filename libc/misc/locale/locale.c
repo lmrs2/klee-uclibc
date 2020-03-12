@@ -601,7 +601,7 @@ int attribute_hidden _locale_set_l(const unsigned char *p, __locale_t base)
 	int len;
 	int c;
 	int i = 0;
-	__collate_t newcol;
+	__collate_t newcol = {0};
 
 	++p;
 

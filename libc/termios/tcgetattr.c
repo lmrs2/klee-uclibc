@@ -34,6 +34,8 @@ libc_hidden_proto(tcgetattr)
    translate it here.  */
 #include "kernel_termios.h"
 
+extern void klee_ignore_undefined(void *addr, size_t nbytes);
+
 /* Put the state of FD into *TERMIOS_P.  */
 int tcgetattr (int fd, struct termios *termios_p)
 {
@@ -41,6 +43,8 @@ int tcgetattr (int fd, struct termios *termios_p)
     int retval;
 
     retval = ioctl (fd, TCGETS, &k_termios);
+
+    klee_ignore_undefined(&k_termios, sizeof(k_termios));
 
     termios_p->c_iflag = k_termios.c_iflag;
     termios_p->c_oflag = k_termios.c_oflag;

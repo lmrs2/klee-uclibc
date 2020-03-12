@@ -723,6 +723,7 @@ void attribute_hidden __init_scan_cookie(register struct scan_cookie *sc,
 #ifdef __UCLIBC_HAS_WCHAR__
 	sc->ungot_wflag = 0;		/* vfwscanf */
 	sc->mb_fail = 0;
+	sc->ungot_char = 0;
 #endif /* __UCLIBC_HAS_WCHAR__ */
 
 #ifdef __UCLIBC_HAS_GLIBC_DIGIT_GROUPING__
@@ -1241,7 +1242,7 @@ int VFSCANF (FILE *__restrict fp, const Wchar *__restrict format, va_list arg)
 	__init_scan_cookie(&sc,fp);
 #ifdef __UCLIBC_HAS_WCHAR__
 	sc.sc_getc = sc_getc;
-	sc.ungot_wchar_width = sc.fp->__ungot_width[1];
+	sc.ungot_wchar_width = sc.fp->__ungot_width[1] = 0;
 
 #ifdef L_vfwscanf
 
